@@ -3,18 +3,21 @@ import Layout from "./components/shared/Layout";
 import HomePage from "./pages/HomePage";
 import ProductsPage from "./pages/ProductsPage";
 import ProductPage from "./pages/ProductPage";
-import CustomDesignPage from "./pages/CustomDesignPage";
-import UploadAndPrintPage from "./pages/UploadAndPrintPage";
 import ServicesPage from "./pages/ServicesPage";
 import ContactPage from "./pages/ContactPage";
 import AboutPage from "./pages/AboutPage";
 import LoginPage from "./pages/LoginPage";
 import DashboardPage from "./pages/admin/DashboardPage";
+import NotFoundPage from "./pages/NotFoundPage";
+import ErrorPage from "./pages/ErrorPage";
+import CartPage from "./pages/CartPage";
+import SignUpPage from "./pages/SignUpPage";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Layout />,
+    errorElement: <ErrorPage />,
     children: [
       {
         index: true,
@@ -27,14 +30,6 @@ const router = createBrowserRouter([
       {
         path: "/products/:productId",
         element: <ProductPage />,
-      },
-      {
-        path: "/custom-design",
-        element: <CustomDesignPage />,
-      },
-      {
-        path: "/upload-print",
-        element: <UploadAndPrintPage />,
       },
       {
         path: "/services",
@@ -53,9 +48,21 @@ const router = createBrowserRouter([
         element: <LoginPage />,
       },
       {
+        path: "/signup",
+        element: <SignUpPage />,
+      },
+      {
         path: "/admin",
         element: <DashboardPage />,
       },
+      {
+        path: "/cart",
+        element: <CartPage />,
+      },
+      {
+        path: "*",
+        element: <NotFoundPage />,
+      }
     ],
   },
 ]);
