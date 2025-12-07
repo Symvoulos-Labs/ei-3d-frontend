@@ -15,11 +15,13 @@ const ProductPreviewModal = ({ product, open, onClose }: ProductPreviewModalProp
 
   if (!product) return null;
 
-  const averageRating = product.reviews?.length > 0
-    ? product.reviews.reduce((acc, review) => acc + review.rating, 0) / product.reviews.length
+  // Normalize reviews to an array to avoid accessing properties on undefined
+  const reviews = product.reviews ?? [];
+  const averageRating = reviews.length > 0
+    ? reviews.reduce((acc: number, review) => acc + review.rating, 0) / reviews.length
     : 0;
 
-  const handleMouseMove = (e) => {
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const { left, top, width, height } = e.currentTarget.getBoundingClientRect();
     const x = ((e.pageX - left) / width) * 100;
     const y = ((e.pageY - top) / height) * 100;
@@ -67,8 +69,8 @@ const ProductPreviewModal = ({ product, open, onClose }: ProductPreviewModalProp
                       className="aspect-h-3 aspect-w-2 overflow-hidden rounded-lg bg-gray-100 sm:col-span-4 lg:col-span-5 group"
                     >
                       <img
-                        src={product.imageSrc}
-                        alt={product.imageAlt}
+                        src={product.images?.[0]?.src ?? '/1.jpg'}
+                        alt={product.images?.[0]?.alt ?? product.name}
                         className="object-cover object-center transition-transform duration-500 ease-in-out"
                         style={{ transformOrigin: `${mousePosition.x}% ${mousePosition.y}%`, transform: 'scale(1.5)' }}
                       />

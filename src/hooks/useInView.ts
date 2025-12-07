@@ -1,8 +1,9 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, RefObject } from 'react';
 
-export const useInView = (options) => {
+// Return a typed tuple so consumers receive the correct ref type (not a union)
+export const useInView = (options: IntersectionObserverInit): [RefObject<HTMLDivElement>, boolean] => {
   const [inView, setInView] = useState(false);
-  const ref = useRef(null);
+  const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const observer = new IntersectionObserver(([entry]) => {

@@ -1,4 +1,4 @@
-import { Fragment, useState } from 'react'
+import { useState } from 'react';
 import {
   Dialog,
   DialogPanel,
@@ -7,12 +7,21 @@ import {
   DisclosurePanel,
   Transition,
   TransitionChild,
-} from '@headlessui/react'
-import { XMarkIcon } from '@heroicons/react/24/outline'
-import { FunnelIcon, MinusIcon, PlusIcon } from '@heroicons/react/20/solid'
+} from '@headlessui/react';
+import { XMarkIcon } from '@heroicons/react/24/outline';
+import { FunnelIcon, MinusIcon, PlusIcon } from '@heroicons/react/20/solid';
 import { products } from '../../lib/products';
 
-const Filters = ({ setSearchTerm, setCategory, setMaterial, setColor, setPrice, price }) => {
+interface FiltersProps {
+  setSearchTerm: (term: string) => void;
+  setCategory: (category: string) => void;
+  setMaterial: (material: string) => void;
+  setColor: (color: string) => void;
+  setPrice: (price: number) => void;
+  price: number;
+}
+
+const Filters = ({ setSearchTerm, setCategory, setMaterial, setColor, setPrice, price }: FiltersProps) => {
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
   const categories = ['all', ...new Set(products.map((p) => p.category))];
   const materials = ['all', ...new Set(products.map((p) => p.material))];

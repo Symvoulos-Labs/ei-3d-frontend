@@ -6,7 +6,7 @@ const tabs = [
   { name: 'Print on Demand', icon: CloudArrowUpIcon },
 ];
 
-function classNames(...classes) {
+function classNames(...classes: (string | boolean)[]) {
   return classes.filter(Boolean).join(' ');
 }
 

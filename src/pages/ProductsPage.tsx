@@ -2,9 +2,10 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { products } from '../lib/products';
 import Filters from '../components/products/Filters';
+import { Product } from '../types';
 
 const ProductsPage = () => {
-  const [filteredProducts, setFilteredProducts] = useState(products);
+  const [filteredProducts, setFilteredProducts] = useState<Product[]>(products);
   const [searchTerm, setSearchTerm] = useState('');
   const [category, setCategory] = useState('all');
   const [material, setMaterial] = useState('all');
@@ -90,8 +91,8 @@ const ProductsPage = () => {
                     <div key={product.id} className="group relative">
                       <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg bg-gray-200 group-hover:opacity-75">
                         <img
-                          src={product.imageSrc}
-                          alt={product.imageAlt}
+                          src={product.images?.[0]?.src ?? '/1.jpg'}
+                          alt={product.images?.[0]?.alt ?? product.name}
                           className="h-full w-full object-cover object-center"
                         />
                       </div>

@@ -4,22 +4,23 @@ import { products } from '../lib/products';
 import { StarIcon } from '@heroicons/react/20/solid';
 import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/react';
 import { MinusIcon, PlusIcon } from '@heroicons/react/24/outline';
+import { Product } from '../types';
 
-function classNames(...classes) {
+function classNames(...classes: (string | boolean)[]) {
   return classes.filter(Boolean).join(' ');
 }
 
 const ProductPage = () => {
   const { productId } = useParams<{ productId: string }>();
   const product = products.find((p) => p.id === Number(productId));
-  const [selectedImage, setSelectedImage] = useState(product?.images[0].src);
+  const [selectedImage, setSelectedImage] = useState(product?.images?.[0]?.src ?? '/1.jpg');
 
   if (!product) {
     return <div>Product not found</div>;
   }
 
   const averageRating = product.reviews?.length > 0
-    ? product.reviews.reduce((acc, review) => acc + review.rating, 0) / product.reviews.length
+    ? product.reviews.reduce((acc: number, review) => acc + review.rating, 0) / product.reviews.length
     : 0;
     
   const similarProducts = products.filter(p => p.category === product.category && p.id !== product.id).slice(0, 4);
@@ -59,7 +60,7 @@ const ProductPage = () => {
                 <div className="w-full aspect-h-1 aspect-w-1 rounded-lg overflow-hidden">
                   <img
                     src={selectedImage}
-                    alt={product.imageAlt}
+                    alt={product.images?.[0]?.alt ?? product.name}
                     className="h-full w-full object-cover object-center"
                   />
                 </div>
@@ -191,12 +192,12 @@ const ProductPage = () => {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
           <h2 className="text-2xl font-bold tracking-tight text-gray-900">Similar Products</h2>
           <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
-            {similarProducts.map((p) => (
+            {similarProducts.map((p: Product) => (
               <div key={p.id} className="group relative">
                 <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 group-hover:opacity-75">
                   <img
-                    src={p.images[0].src}
-                    alt={p.images[0].alt}
+                    src={p.images?.[0]?.src ?? '/1.jpg'}
+                    alt={p.images?.[0]?.alt ?? p.name}
                     className="h-full w-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
                   />
                 </div>

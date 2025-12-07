@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import {
   Popover,
   PopoverButton,
@@ -9,7 +8,7 @@ import {
   MenuItem,
   MenuItems,
 } from '@headlessui/react';
-import { Bars3Icon, XMarkIcon, ShoppingCartIcon, UserCircleIcon } from '@heroicons/react/24/outline';
+import { ShoppingCartIcon, UserCircleIcon } from '@heroicons/react/24/outline';
 import { Link, Outlet } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 import { products } from '../../lib/products';
@@ -56,13 +55,12 @@ const navigation = {
   ],
 }
 
-function classNames(...classes) {
+function classNames(...classes: (string | boolean)[]) {
   return classes.filter(Boolean).join(' ')
 }
 
 const Layout = () => {
   const { isAuthenticated, signOut } = useAuth();
-  const [open, setOpen] = useState(false);
   const { items } = useCartStore();
   const subtotal = items.reduce((acc, item) => acc + item.price * item.quantity, 0);
 
@@ -88,7 +86,7 @@ const Layout = () => {
                   >
                     Home
                   </Link>
-                  <Popover className="flex" onMouseEnter={() => setOpen(true)} onMouseLeave={() => setOpen(false)}>
+                  <Popover className="flex">
                     {({ open }) => (
                       <>
                         <div className="relative flex">
@@ -105,7 +103,6 @@ const Layout = () => {
                         </div>
 
                         <PopoverPanel
-                          show={open}
                           transition
                           className="absolute inset-x-0 top-full text-sm text-gray-500 transition data-[closed]:opacity-0 data-[enter]:duration-200 data-[leave]:duration-150 data-[enter]:ease-out data-[leave]:ease-in"
                         >
@@ -195,8 +192,8 @@ const Layout = () => {
                         {items.map((item) => (
                           <li key={item.id} className="flex items-center py-6">
                             <img
-                              src={item.imageSrc}
-                              alt={item.imageAlt}
+                              src={item.images[0].src}
+                              alt={item.images[0].alt}
                               className="h-16 w-16 flex-none rounded-md border border-gray-200"
                             />
                             <div className="ml-4 flex-auto">

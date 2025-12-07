@@ -1,6 +1,7 @@
 import { useCartStore } from '../store/cartStore';
 import { Link } from 'react-router-dom';
 import { XMarkIcon } from '@heroicons/react/24/outline';
+import { CartItem } from '../store/cartStore';
 
 const CartPage = () => {
   const { items, removeFromCart, updateQuantity } = useCartStore();
@@ -17,12 +18,12 @@ const CartPage = () => {
             </h2>
 
             <ul role="list" className="divide-y divide-gray-200 border-t border-b border-gray-200">
-              {items.map((product) => (
+              {items.map((product: CartItem) => (
                 <li key={product.id} className="flex py-6 sm:py-10">
                   <div className="flex-shrink-0">
                     <img
-                      src={product.imageSrc}
-                      alt={product.imageAlt}
+                      src={product.images[0]?.src}
+                      alt={product.images[0]?.alt}
                       className="h-24 w-24 rounded-md object-cover object-center sm:h-48 sm:w-48"
                     />
                   </div>

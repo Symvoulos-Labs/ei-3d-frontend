@@ -33,13 +33,15 @@ const HomePage = () => {
 
   const categories = useMemo(() => {
     if (!products) return [];
-    return ['all', ...new Set(products.map(p => p.category))];
+    const productArray = Array.isArray(products) ? products as Product[] : [];
+    return ['all', ...new Set(productArray.map((p: Product) => p.category))];
   }, [products]);
 
   const filteredProducts = useMemo(() => {
     if (!products) return [];
-    if (selectedCategory === 'all') return products;
-    return products.filter(p => p.category === selectedCategory);
+    const productArray = Array.isArray(products) ? products as Product[] : [];
+    if (selectedCategory === 'all') return productArray;
+    return productArray.filter((p: Product) => p.category === selectedCategory);
   }, [products, selectedCategory]);
 
   const scroll = (scrollOffset: number) => {
@@ -141,11 +143,13 @@ const HomePage = () => {
                     className="aspect-h-1 aspect-w-1 w-full overflow-hidden cursor-pointer"
                     onClick={() => handlePreview(product)}
                   >
-                    <img
-                      src={product.imageSrc}
-                      alt={product.imageAlt}
-                      className="h-full w-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
-                    />
+                    {product.images && product.images.length > 0 && (
+                      <img
+                        src={product.images?.[0]?.src ?? '/1.jpg'}
+                        alt={product.images?.[0]?.alt ?? product.name}
+                        className="h-full w-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
+                      />
+                    )}
                     <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity">
                       <EyeIcon className="h-8 w-8 text-white" />
                     </div>
