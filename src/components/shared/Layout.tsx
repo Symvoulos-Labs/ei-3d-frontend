@@ -65,16 +65,16 @@ const Layout = () => {
   const subtotal = items.reduce((acc, item) => acc + item.price * item.quantity, 0);
 
   return (
-    <div className="min-h-screen bg-gray-100">
-      <header className="sticky top-0 z-50 bg-gray-800/90 backdrop-blur-md">
+    <div className="min-h-screen bg-neutral-50">
+      <header className="sticky top-0 z-50 bg-white/60 backdrop-blur-md border-b border-neutral-100">
         <nav aria-label="Top" className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="border-b border-gray-700">
             <div className="flex h-16 items-center">
               <div className="flex flex-1 items-center">
                 <Link to="/" className="flex items-center">
                   <span className="sr-only">Your Company</span>
-                  <img className="h-8 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=cyan&shade=400" alt="" />
-                  <span className="ml-3 text-xl font-bold text-white">3D Prints</span>
+                  <img className="h-8 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=primary&shade=400" alt="" />
+                  <span className="ml-3 text-xl font-bold text-neutral-900">3D Prints</span>
                 </Link>
               </div>
 
@@ -179,7 +179,7 @@ const Layout = () => {
                       className="h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-300"
                       aria-hidden="true"
                     />
-                    <span className="ml-2 text-sm font-medium text-gray-300 group-hover:text-white">{items.length}</span>
+                    <span className="ml-2 text-sm font-medium text-neutral-900">{items.length}</span>
                     <span className="sr-only">items in cart, view bag</span>
                   </PopoverButton>
                   <PopoverPanel
@@ -192,9 +192,9 @@ const Layout = () => {
                         {items.map((item) => (
                           <li key={item.id} className="flex items-center py-6">
                             <img
-                              src={item.images[0].src}
-                              alt={item.images[0].alt}
-                              className="h-16 w-16 flex-none rounded-md border border-gray-200"
+                              src={item.images?.[0]?.src ?? '/1.jpg'}
+                              alt={item.images?.[0]?.alt ?? item.name}
+                              className="h-16 w-16 flex-none rounded-md border border-neutral-200 object-cover"
                             />
                             <div className="ml-4 flex-auto">
                               <h3 className="font-medium text-gray-900">
@@ -214,7 +214,7 @@ const Layout = () => {
                         <div className="mt-6">
                           <Link
                             to="/cart"
-                            className="flex items-center justify-center rounded-md border border-transparent bg-cyan-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-cyan-700"
+                            className="btn-primary"
                           >
                             View cart
                           </Link>
@@ -251,7 +251,7 @@ const Layout = () => {
                       </MenuItems>
                     </Menu>
                   ) : (
-                    <Link to="/login" className="text-sm font-medium text-gray-300 hover:text-white">
+                    <Link to="/login" className="btn-ghost">
                       Sign in
                     </Link>
                   )}
